@@ -1,0 +1,13 @@
+@import url(./shared.css);
+
+:root {
+  text-align: center; 
+}
+
+.header {
+  font-size: 1.5em;
+}
+
+.header__code {
+  font-size: 5em;
+}

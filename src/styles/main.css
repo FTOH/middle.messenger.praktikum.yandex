@@ -1,0 +1,46 @@
+@import url(./shared.css);
+@import url(./components/button.css);
+@import url(./components/link.css);
+@import url(./components/profile.css);
+@import url(./components/textfileld.css);
+
+h1 {
+  text-align: center;
+}
+
+input,
+input:focus,
+button,
+button:focus {
+  font-size: inherit;
+  border: none;
+  outline: none;
+}
+
+.container {
+  margin: 25px;
+  width: 400px;
+}
+
+.container__content {
+  position: relative;
+  padding: 35px 50px;
+  background-color: #fff;
+  border-radius: 20px;
+
+  box-shadow: 8px 8px 0 #868686;
+}
+
+.container__backlink {
+  position: absolute;
+  left: 30px;
+  top: 25px;
+}
+
+.container__element {
+  margin-top: 15px;
+}
+
+.container__element--gap {
+  margin-top: 50px;
+}

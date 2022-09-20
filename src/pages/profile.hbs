@@ -1,0 +1,48 @@
+---
+title: Мой профиль
+dropdown_items:
+  - text: Фотографию
+    href: 'javascript:showOpenFilePicker({types:[{description:"Images",accept:{"image/*":[".png",".gif",".jpeg",".jpg"]}}]})'
+  - text: Информацию
+    href: './edit_profile.hbs'
+  - text: Пароль
+    href: './edit_password.hbs'
+
+---
+{{!< main}}
+
+<div class="container__content profile">
+  <div class="container__backlink">
+    {{> link text="Назад" href="./auth.hbs" }}
+  </div>
+  <h1 class="profile__header">Профиль</h1>
+
+  <div class="profile__avatar">
+    <img src="../assets/defaultprofile.svg" alt="">
+  </div>
+
+  <div class="profile__row">
+    <h2>Иван Иванов</h2>
+    <div>@SuperIvan</div>
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Подпись в чате</div>
+    <div>Ванёк</div>
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Почта</div>
+    <div>i_ivanov2004@yandex.ru</div>
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Телефон</div>
+    <div>+7 (123) 456-78-90</div>
+  </div>
+
+  <div class="profile__row profile__row--wide profile__row--gap">
+    {{> dropdown text="Изменить" items=dropdown_items }}
+    {{> link type="dangerous" text="Сменить аккаунт" href="./auth.hbs"}}
+  </div>
+</div>
