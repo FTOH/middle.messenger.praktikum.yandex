@@ -1,0 +1,40 @@
+---
+title: Редактирование профиля
+---
+{{!< main}}
+
+
+<form class="container__content" action="#">
+  <div class="container__backlink">
+    {{> link text="Назад" href="./profile.hbs" }}
+  </div>
+  <h1>Редактирование</h1>
+
+  <div class="container__element">
+    {{> input type="text" name="first_name" text="Имя"}}
+  </div>
+
+  <div class="container__element">
+    {{> input type="text" name="second_name" text="Фамилия"}}
+  </div>
+
+  <div class="container__element">
+    {{> input type="text" name="display_name" text="Отображаемое имя"}}
+  </div>
+
+  <div class="container__element">
+    {{> input type="text" name="login" text="Логин"}}
+  </div>
+
+  <div class="container__element">
+    {{> input type="email" name="email" text="Почта"}}
+  </div>
+
+  <div class="container__element">
+    {{> input type="tel" name="phone" text="Номер телефона"}}
+  </div>
+
+  <div class="container__element container__element--gap">
+    {{> button text="Сохранить"}}
+  </div>
+</form>

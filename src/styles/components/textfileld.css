@@ -1,0 +1,40 @@
+
+.textfield {
+  line-height: 20px;
+  --offset: 17px, 20px;
+}
+
+.textfield:focus-within > .textfield__content {
+  --color: #2E2E2E;
+}
+
+.textfield__content {
+  transition: 100ms ease;
+  color: var(--color, #636363);
+  border-bottom: 3px solid var(--color, #8f8f8f);
+
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.textfield__input:not(:placeholder-shown) + .textfield__label {
+  transform: translate(0, 0);
+  opacity: 1;
+  font-size: 1.1em;
+}
+
+.textfield__label {
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  transform: translate(var(--offset));
+}
+
+.textfield__input {
+  margin: 5px 15;
+}
+
+.textfield__input,
+.textfield__input:focus {
+  border: none;
+  outline: none;
+}
