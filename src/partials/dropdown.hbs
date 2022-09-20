@@ -1,43 +1,10 @@
 
-<style>
-  .dropdown {
-    position: relative;
-  }
-  .dropdown__list {
-    display: none;
-    position: absolute;
-    background: white;
-    border: 1px solid #c2c2c2;
-    list-style: none;
-    bottom: 10px;
-    padding: 0;
-  }
-  .dropdown__list > li {
-    display: flex;
-  }
-  .dropdown__list > li:hover {
-    background: #c2c2c2;
-  }
-  .dropdown__label:focus + .dropdown__list, .dropdown__list:hover {
-    display: block;
-  }
-  .dropdown__label::after {
-    content: ' ▼';
-  }
-  .dropdown__label:focus::after {
-    content: ' ▲';
-  }
-  .dropdown__item {
-    padding: 10px 25px;
-    width: 100%;
-  }
-</style>
 <div class="dropdown">
   <a class="link dropdown__label" href="#" onclick="return false;">{{text}}</a>
 
   <ul class="dropdown__list">
     {{#each items}}
-    <li>
+    <li class="dropdown__item-wrapper">
       <a class="dropdown__item link" href="{{href}}">{{text}}</a>
     </li>
     {{/each}}
