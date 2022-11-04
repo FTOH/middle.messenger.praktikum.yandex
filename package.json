@@ -5,9 +5,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "predev": "rimraf dist .parcel-cache",
+    "clean": "rimraf dist .parcel-cache",
     "dev": "parcel --target frontend",
     "build": "parcel build",
+    "cleandev": "run-s clean dev",
+    "cleanbuild": "run-s clean build",
     "lint": "run-s lint:*",
     "lint:ts": "tsc --noEmit",
     "lint:js": "eslint .",
