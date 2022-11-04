@@ -2,7 +2,6 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "private": true,
   "scripts": {
     "clean": "rimraf dist .parcel-cache",
@@ -15,7 +14,7 @@
     "lint:js": "eslint .",
     "lint:css": "stylelint .",
     "server": "node dist/backend/server.js",
-    "start": "run-s build server"
+    "start": "run-s cleanbuild server"
   },
   "alias": {
     "components": "./src/components",
