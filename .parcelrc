@@ -3,6 +3,6 @@
     "@parcel/config-default"
   ],
   "transformers": {
-    "*.hbs": ["@anikin/parcel-transformer-handlebars"]
+    "*.hbs": ["@anikin/parcel-transformer-handlebars-precompile"]
   }
 }

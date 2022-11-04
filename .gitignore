@@ -1,8 +1,4 @@
-node_modules
+.cache
 .parcel-cache
 dist
-<<<<<<< HEAD
-.vscode
-=======
-.vscode
->>>>>>> sprint_1
+node_modules

@@ -1,0 +1,35 @@
+@import "/src/styles/variables.less";
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container__header {
+  text-align: center;
+}
+
+.container__content {
+  position: relative;
+  padding: 35px 50px;
+  background-color: @form-background;
+  border-radius: 20px;
+  box-shadow: 8px 8px 0 @form-shadow;
+  width: 400px;
+}
+
+.container__backlink {
+  position: absolute;
+  left: 30px;
+  top: 25px;
+}
+
+.container__element {
+  margin-top: 15px;
+}
+
+.container__element--gap {
+  margin-top: 50px;
+}
