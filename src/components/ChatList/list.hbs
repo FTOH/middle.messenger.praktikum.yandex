@@ -1,0 +1,30 @@
+<ul class="chat-list__rooms">
+  {{#each rooms}}
+  <li class="chat-list__room-wrapper">
+    <section class="chat-list__room">
+
+      <img class="chat-list__avatar" src="{{photo}}" alt="avatar">
+
+      <div class="chat-list__context">
+        <div class="chat-list__name">{{name}}</div>
+        {{#if lastMessage.sentByMe}}
+        <span class="chat-list__sent-by-me">Я:</span>
+        {{/if}}
+        <span class="chat-list__last-message">{{lastMessage.text}}</span>
+      </div>
+
+      <div class="chat-list__info">
+        <div class="chat-list__date">{{lastMessage.date}}</div>
+        {{#if unreadCount}}
+        <div class="chat-list__unread-count">{{unreadCount}}</div>
+        {{/if}}
+      </div>
+
+    </section>
+  </li>
+  {{else}}
+  <li class="chat-list__no-rooms">
+    Тут пока пусто
+  </li>
+  {{/each}}
+</ul>

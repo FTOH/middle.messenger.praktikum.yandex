@@ -1,0 +1,6 @@
+# process only css files from src folder
+/*
+!src
+src/**/*.*
+!src/**/*.css
+!src/**/*.less

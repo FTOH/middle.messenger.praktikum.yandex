@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+
+    "experimentalDecorators": true,
+    "strict": true,
+
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "baseUrl": ".",
+    "outDir": "dist",
+    "paths": {
+      "components/*": [ "src/components/*" ],
+      "core/*": [ "src/core/*" ],
+      "layouts/*": [ "src/layouts/*" ],
+      "pages/*": [ "src/pages/*" ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    ".parcel-cache",
+    "node_modules"
+  ]
+}
