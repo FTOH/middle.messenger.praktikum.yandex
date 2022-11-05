@@ -1,63 +1,45 @@
 /* eslint-disable arrow-body-style */
-const enum METHOD {
+import { queryStringify } from './queryStringify'
+
+const enum Method {
   GET = 'GET',
   PUT = 'PUT',
   POST = 'POST',
   DELETE = 'DELETE',
 }
 
-function queryStringify(data: Record<string, unknown>) {
-  return `?${Object.entries(data).map((entry) => entry.join('=')).join('&')}`
-}
-
 interface Options {
   headers?: Record<string, string>,
   data?: Record<string, unknown>,
-  method?: METHOD,
+  method?: Method,
   timeout?: number,
 }
 
 export class HTTPTransport {
   public get = (url: string, options: Options = {}) => {
-    if (options.data) url += queryStringify(options.data)
+    if (options.data) {
+      url += queryStringify(options.data)
+    }
     options.data = undefined
-    return this.request(
-      url,
-      { ...options, method: METHOD.GET },
-
-      options.timeout,
-    )
+    return this.request(url, { ...options, method: Method.GET })
   }
 
   public put = (url: string, options: Options = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHOD.PUT },
-
-      options.timeout,
-    )
+    return this.request(url, { ...options, method: Method.PUT })
   }
 
   public post = (url: string, options: Options = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHOD.POST },
-
-      options.timeout,
-    )
+    return this.request(url, { ...options, method: Method.POST })
   }
 
   public delete = (url: string, options: Options = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHOD.DELETE },
-
-      options.timeout,
-    )
+    return this.request(url, { ...options, method: Method.DELETE })
   }
 
-  private request = (url: string, options: Options, timeout = 5000) => {
-    const { headers = {}, data = {}, method = METHOD.GET } = options
+  private request = (url: string, options: Options) => {
+    const {
+      headers = {}, data = {}, method = Method.GET, timeout = 5000,
+    } = options
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()

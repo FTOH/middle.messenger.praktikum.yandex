@@ -1,4 +1,4 @@
-type EventStore = Record<string, Array<CallableFunction>>
+type EventStore = Record<string, CallableFunction[]>
 
 export class EventBus<T extends string = string> {
   private listeners: Partial<EventStore> = {}
