@@ -1,0 +1,8 @@
+<a class="dropdown__label" href="#" onclick="return false;">{{text}}</a>
+<ul class="dropdown__list">
+  {{#each items as |item index|}}
+  <li class="dropdown__item-wrapper">
+    <a class="dropdown__item" href="#" data-key="{{index}}">{{item.text}}</a>
+  </li>
+  {{/each}}
+</ul>

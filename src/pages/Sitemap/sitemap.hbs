@@ -1,8 +1,8 @@
-<nav>
+<nav style="margin: 100px;">
   <ul>
-    {{#each links}}
+    {{#each routes}}
       <li>
-        <a href="{{url}}">{{name}}</a>
+        <a href="{{pathname}}">{{pathname}}</a>
       </li>
     {{/each}}
   </ul>

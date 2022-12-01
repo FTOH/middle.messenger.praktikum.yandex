@@ -1,0 +1,2 @@
+extension: [js]
+spec: dist/tests/**/*.spec.js

@@ -1,0 +1,93 @@
+@import "/src/styles/variables.less";
+
+.chat-side__outer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-side__header {
+  padding: 15px;
+  text-align: right;
+}
+
+.chat-side__rooms {
+  padding: 20px;
+  overflow: auto;
+  flex-grow: 1;
+}
+
+.chat-side__room-wrapper {
+  border-top: 1px solid @chat-side-delimiter;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: @chat-side-chats-bg;
+  }
+
+  &--selected {
+    background-color: @chat-side-hover-bg;
+  }
+}
+
+.chat-side__room {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.chat-side__avatar {
+  aspect-ratio: 1/1;
+  width: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-side__context {
+  flex-grow: 1;
+}
+
+.chat-side__name {
+  font-weight: bold;
+}
+
+.chat-side__sent-by-me {
+  font-weight: 900;
+}
+
+.chat-side__last-message {
+  font-weight: 400;
+}
+
+.chat-side__no-last-message {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.chat-side__info {
+  text-align: center;
+}
+
+.chat-side__date {
+  font-weight: 300;
+}
+
+.chat-side__unread-count {
+  margin-top: 5px;
+  background: @chat-side-unread-bg;
+  aspect-ratio: 1/1;
+  padding: 7px;
+  border-radius: 50%;
+  color: @chat-side-unread;
+}
+
+.chat-side__no-rooms {
+  text-align: center;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.chat-side__footer {
+  margin: 15px;
+}

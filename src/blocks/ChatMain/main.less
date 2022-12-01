@@ -9,6 +9,60 @@
 .chat-main__header {
   background: @chat-main-header-bg;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-main__users {
+  position: relative;
+}
+
+.chat-main__user-count-label {
+  font-weight: 400;
+  color: @chat-main-user-count-label;
+  cursor: pointer;
+
+  &:hover {
+    color: @chat-main-user-count-label-hover;
+  }
+}
+
+.chat-main__users-list {
+  display: none;
+  position: absolute;
+  min-width: 250px;
+  background: @chat-main-user-list-bg;
+  padding: 15px;
+  z-index: 9999999;
+  border-radius: 6px;
+  margin: 10px auto;
+  translate: -50%;
+  left: 50%;
+}
+
+.chat-main__users-list--show {
+  display: block;
+}
+
+.chat-main__user-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-main__inline-button {
+  cursor: pointer;
+  background-color: @chat-main-inline-button;
+
+  &:hover {
+    background-color: @chat-main-inline-button-bg;
+  }
+}
+
+.chat-main__add-user {
+  display: block;
+  margin: 25px auto 0;
+  width: 100%;
 }
 
 .chat-main__content-wrapper {
@@ -32,6 +86,16 @@
   width: 100%;
   height: 100%;
   filter: brightness(1.1) contrast(1.1) saturate(0.7);
+}
+
+.chat-main__no-chats {
+  position: relative;
+  margin: auto;
+  font-weight: 400;
+  background-color: @chat-main-no-chat-bg;
+  color: @chat-main-no-chat-font;
+  border-radius: 15px;
+  padding: 6px 12px;
 }
 
 .chat-main__messages {
