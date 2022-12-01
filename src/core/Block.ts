@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import { createElement } from 'utils/createElement'
 import { EventBus } from './EventBus'
 
 const enum EVENTS {
@@ -8,20 +9,23 @@ const enum EVENTS {
   FLOW_RENDER = 'flow:render',
 }
 
-interface RootTag {
+export interface RootTag {
   tag: string,
   className: string,
   attr: Record<string, string>,
   parentEvents: Record<string, EventListener>
 }
 
-interface Props {
-  [key: string]: unknown
-}
+type HTMLChildren = string | Node | (string | Node)[]
 
-type HTMLChildren = string | Node | (string | Node)[] | void
+type Props = Record<string, unknown>
 
-export abstract class Block<T extends Props = Props> {
+export type BlockBuilder<T = Props> = T extends Props ? (() => Block<T>) : never
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export abstract class Block<T extends Props = any> {
+  public blockName: string = this.constructor.name
+
   #id = nanoid()
 
   get id() {
@@ -40,13 +44,13 @@ export abstract class Block<T extends Props = Props> {
 
   constructor(
     {
-      tag = 'div', className = '', attr = {}, parentEvents: events = {},
+      tag = 'div', className = '', attr = {}, parentEvents = {},
     }: Partial<RootTag> = {},
     props = {} as T,
   ) {
     this.#meta = {
       root: {
-        tag, className, attr, parentEvents: events,
+        tag, className, attr, parentEvents,
       },
       props,
     }
@@ -69,19 +73,23 @@ export abstract class Block<T extends Props = Props> {
 
   #createResources() {
     const { root: { tag, className, attr } } = this.#meta
-    return Block.#createElement(tag, {
+    return createElement(tag, {
       ...attr,
       class: className,
     })
   }
 
   #init = () => {
-    this.#addEvents()
+    this.#addParentEvents()
     queueMicrotask(() => this.eventBus().emit(EVENTS.FLOW_RENDER))
   }
 
   public unmount() {
+    this.#removeParentEvents()
     this.#element.remove()
+    if (process.env.NODE_ENV === 'development') {
+      console.debug(`> Unmounted «${this.blockName}»`)
+    }
   }
 
   #componentDidMount = () => {
@@ -91,9 +99,11 @@ export abstract class Block<T extends Props = Props> {
     children.forEach((child) => child.dispatchComponentDidMount())
   }
 
-  protected componentDidMount(_props: T): void {
+  // @ts-expect-error default implementation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected componentDidMount(props: T): void {
     if (process.env.NODE_ENV === 'development') {
-      console.debug(`Mounted «${this.constructor.name}» with props`, this.#meta.props)
+      console.debug(`> Mounted «${this.blockName}» with props`, this.#meta.props)
     }
   }
 
@@ -106,15 +116,15 @@ export abstract class Block<T extends Props = Props> {
     if (response) this.eventBus().emit(EVENTS.FLOW_RENDER)
   }
 
-  protected componentDidUpdate(_oldProps: T, _newProps: T, _changedProps: Readonly<keyof T>[]) {
+  // @ts-expect-error default implementation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected componentDidUpdate(oldProps: T, newProps: T, changedProps: Readonly<keyof T>[]) {
     return true
   }
 
   #setUpdateProps: (keyof T)[] = []
 
   public setProps = (nextProps: Partial<T>) => {
-    if (!nextProps) return
-
     const oldProps = { ...this.#props }
 
     this.#setUpdateProps = []
@@ -136,7 +146,7 @@ export abstract class Block<T extends Props = Props> {
 
   #makePropsProxy(props: Props): Props {
     const proxyProps = new Proxy(props, {
-      get(target, prop: string) {
+      get(target, prop: string): unknown {
         const value = target[prop]
         return typeof value === 'function' ? value.bind(target) : value
       },
@@ -156,7 +166,7 @@ export abstract class Block<T extends Props = Props> {
     return proxyProps
   }
 
-  #addEvents() {
+  #addParentEvents() {
     const { parentEvents: events } = this.#meta.root
     this.#events = { ...events }
     Object.entries(events).forEach(([name, fn]) => {
@@ -164,7 +174,7 @@ export abstract class Block<T extends Props = Props> {
     })
   }
 
-  #removeEvents() {
+  #removeParentEvents() {
     Object.entries(this.#events).forEach(([name, fn]) => {
       this.#element.removeEventListener(name, fn)
     })
@@ -190,13 +200,13 @@ export abstract class Block<T extends Props = Props> {
       el.replaceWith(child.getContent())
     })
 
-    const eventNames = html.match(/on:[a-z]+="/g) || []
+    const eventNames = html.match(/on:[a-z]+="/g) ?? []
     eventNames.forEach((eventName) => {
       eventName = eventName.slice(3, -2)
       const nodes = dom.content.querySelectorAll(`[on\\:${eventName}]`)
       nodes.forEach((node) => {
         const attr = node.getAttribute(`on:${eventName}`)
-        const handler = events[attr || '']
+        const handler = events[attr ?? '']
         if (handler) node.addEventListener(eventName, handler)
         node.removeAttribute(`on:${eventName}`)
       })
@@ -211,7 +221,7 @@ export abstract class Block<T extends Props = Props> {
 
   #render = () => {
     const block = this.render()
-    this.#removeEvents()
+    this.#removeParentEvents()
 
     this.#element.innerHTML = ''
 
@@ -220,15 +230,15 @@ export abstract class Block<T extends Props = Props> {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      console.debug(`Rendered «${this.constructor.name}» with props`, this.#meta.props)
+      console.debug(`> Rendered «${this.blockName}» with props`, this.#meta.props)
     }
 
-    this.#addEvents()
+    this.#addParentEvents()
   }
 
   #splitPropsByType(props: Props) {
     const propsAndStubs: Record<string, unknown> = {}
-    const events: Record<string, EventListener | void> = {}
+    const events: Record<string, EventListener | undefined> = {}
     const children: Block[] = []
 
     Object.entries(props).forEach(([key, value]) => {
@@ -246,7 +256,7 @@ export abstract class Block<T extends Props = Props> {
             children.push(item)
             return `<stub data-id="${item.#id}"></stub>`
           }
-          return item
+          return item as unknown
         })
         propsAndStubs[key] = items
       } else {
@@ -254,23 +264,6 @@ export abstract class Block<T extends Props = Props> {
       }
     })
     return { propsAndStubs, events, children }
-  }
-
-  static #createElement(
-    tagName: string,
-    props: Record<string, string | number | EventListener | undefined | null> = {},
-  ) {
-    const node = document.createElement(tagName)
-    Object.entries(props).forEach(([key, value]) => {
-      if (typeof value === 'function') {
-        node.addEventListener(key, value)
-        return
-      }
-      if (value) {
-        node.setAttribute(key, String(value))
-      }
-    })
-    return node
   }
 
   show() {

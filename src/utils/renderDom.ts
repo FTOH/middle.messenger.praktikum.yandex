@@ -1,6 +1,6 @@
-import { Block } from './Block'
+import { Block } from 'core/Block'
 
-export async function renderDom<T extends Block['props']>(
+export function renderDom<T extends Block['props']>(
   rootSelector: string,
   component: Block<T>,
 ) {
