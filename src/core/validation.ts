@@ -1,10 +1,9 @@
-export type Validator = (value: string) => string | void
-type ValidationType = 'login' | 'password' | 'name' | 'email' | 'phone' | 'none'
-type ValidationRule = {
-  type: string,
-  value: string,
-}
+export type Validator = (value: string) => string | undefined
+export type ValidationType = 'login' | 'password' | 'name' | 'email' | 'phone' | 'none'
 
+/* LOGIN */
+const ONLY_NUMBERS = /^\d+$/
+const CONTAINS_NON_LOGIN_SYMBOLS = /[^\w\d_-]/i
 const validateLogin: Validator = (value) => {
   if (value.length < 3) {
     return 'Слишком короткий'
@@ -14,15 +13,18 @@ const validateLogin: Validator = (value) => {
     return 'Слишком длинный'
   }
 
-  if (/^\d+$/.test(value)) {
+  if (ONLY_NUMBERS.test(value)) {
     return 'Не только цифры'
   }
 
-  if (/[^\w\d_-]/i.test(value)) {
+  if (CONTAINS_NON_LOGIN_SYMBOLS.test(value)) {
     return 'Можно A-Z, цифры, «_» и «-»'
   }
 }
 
+/* PASSWORD */
+const CONTAINS_UPPERCASE = /\p{Uppercase_Letter}/u
+const CONTAINS_NUMBERS = /\d/
 const validatePassword: Validator = (value) => {
   if (value.length < 8) {
     return 'Слишком короткий'
@@ -32,34 +34,38 @@ const validatePassword: Validator = (value) => {
     return 'Слишком длинный'
   }
 
-  if (!/\p{Uppercase_Letter}/u.test(value)) {
+  if (!CONTAINS_UPPERCASE.test(value)) {
     return 'Минимум 1 заглавная'
   }
 
-  if (!/\d/.test(value)) {
+  if (!CONTAINS_NUMBERS.test(value)) {
     return 'Минимум 1 цифра'
   }
 }
 
+/* NAME */
+const CONTAINS_NUMBERS_OR_SPACES = /\s|\d/
+const CONTAINS_NON_LETTERS = /\P{Letter}/u
+const CONTAINS_LOWERCASE = /\P{Uppercase_Letter}/u
 const validateName: Validator = (value) => {
-  if (/\s|\d/.test(value)) {
+  if (CONTAINS_NUMBERS_OR_SPACES.test(value)) {
     return 'Без пробелов и цифр'
   }
 
-  if (/[^\wа-яё-]/.test(value)) {
-    if (/\P{Letter}/u.test(value.replaceAll('-', ''))) {
-      return 'Без спецсимволов'
-    }
-    return 'Латиница или кириллица'
+  if (CONTAINS_NON_LETTERS.test(value.replaceAll('-', ''))) {
+    return 'Без спецсимволов'
   }
 
-  if (/\P{Uppercase_Letter}/u.test(value[0])) {
+  if (CONTAINS_LOWERCASE.test(value[0])) {
     return 'Первая — заглавная'
   }
 }
 
+/* E-MAIL */
+const CONTAINS_NON_LATIN = /[^\w\d@.-]/i
+const CONTAINS_DOT_IN_DOMAIN = /\w\.\w/
 const validateEmail: Validator = (value) => {
-  if (/[^\w\d@.-]/i.test(value)) {
+  if (CONTAINS_NON_LATIN.test(value)) {
     return 'Только латиница'
   }
 
@@ -80,17 +86,20 @@ const validateEmail: Validator = (value) => {
     return 'Нет домена'
   }
 
-  if (!/\w\.\w/.test(value)) {
+  if (!CONTAINS_DOT_IN_DOMAIN.test(value)) {
     return 'Неправильный домен'
   }
 }
 
+/* PHONE */
+const CONTAINS_NON_NUMBERS_EXCEPT_PLUS = /[^\d+]/
+const CONTAINS_NON_NUMBERS = /[^\d]/
 const validatePhone: Validator = (value) => {
-  if (/[^\d+]/.test(value)) {
+  if (CONTAINS_NON_NUMBERS_EXCEPT_PLUS.test(value)) {
     return 'Только цифры'
   }
 
-  if (/[^\d]/.test(value.slice(1))) {
+  if (CONTAINS_NON_NUMBERS.test(value.slice(1))) {
     return 'Плюс в начале'
   }
 
@@ -106,7 +115,7 @@ const validatePhone: Validator = (value) => {
 export const validateByType = (
   type: string,
   value: string,
-): string | void => {
+): string | undefined => {
   switch (type.toLowerCase() as ValidationType) {
     case 'login':
       return validateLogin(value)
@@ -122,12 +131,5 @@ export const validateByType = (
       return
     default:
       throw new Error(`Неизвестный тип валидатора ${type}. Значение: ${value}`)
-  }
-}
-
-export const validateInput = (rules: ValidationRule[]): string | void => {
-  for (const rule of rules) {
-    const error = validateByType(rule.type, rule.value)
-    if (error) return error
   }
 }

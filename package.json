@@ -4,35 +4,46 @@
   "description": "",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist .parcel-cache",
-    "dev": "parcel --target frontend",
-    "build": "parcel build",
-    "cleandev": "run-s clean dev",
-    "cleanbuild": "run-s clean build",
+    "dev": "parcel --target frontend --no-cache",
+    "build": "parcel build --target frontend --no-cache",
+    "build:back": "parcel build --target backend --no-cache",
+    "build:test": "parcel build --target test --no-cache \"src/**/*.spec.ts\"",
     "lint": "run-s lint:*",
     "lint:ts": "tsc --noEmit",
     "lint:js": "eslint .",
     "lint:css": "stylelint .",
+    "test": "npm run build:test && mocha",
     "server": "node dist/backend/server.js",
-    "start": "run-s cleanbuild server"
+    "start": "run-s build build:back server"
   },
   "alias": {
+    "api": "./src/api",
+    "blocks": "./src/blocks",
     "components": "./src/components",
+    "controllers": "./src/controllers",
     "core": "./src/core",
     "layouts": "./src/layouts",
-    "pages": "./src/pages"
+    "pages": "./src/pages",
+    "utils": "./src/utils"
   },
   "targets": {
     "frontend": {
       "sourceMap": true,
       "context": "browser",
-      "distDir": "dist",
-      "source": "src/index.html"
+      "source": [
+        "src/index.html",
+        "src/blockedcookies.html"
+      ]
     },
     "backend": {
       "sourceMap": false,
       "context": "node",
       "source": "server.ts"
+    },
+    "test": {
+      "sourceMap": false,
+      "context": "node",
+      "distDir": "dist/tests"
     }
   },
   "engines": {
@@ -42,14 +53,19 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
     "@parcel/transformer-less": "^2.7.0",
+    "@types/chai": "^4.3.4",
     "@types/express": "^4.17.14",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^18.8.2",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
+    "chai": "^4.3.7",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.25.2",
+    "mocha": "^10.1.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.7.0",
     "postcss-less": "^6.0.0",

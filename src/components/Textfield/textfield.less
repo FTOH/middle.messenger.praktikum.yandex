@@ -1,4 +1,4 @@
-@import "../../styles/variables.less";
+@import "/src/styles/variables.less";
 
 .textfield {
   line-height: 20px;
@@ -33,10 +33,22 @@
   gap: 5px;
 }
 
+.textfield__input:-webkit-autofill + .textfield__label {
+  transform: translate(0, 0);
+  opacity: 1;
+  font-size: 1.1001em;
+}
+
+.textfield__input:autofill + .textfield__label {
+  transform: translate(0, 0);
+  opacity: 1;
+  font-size: 1.1002em;
+}
+
 .textfield__input:not(:placeholder-shown) + .textfield__label {
   transform: translate(0, 0);
   opacity: 1;
-  font-size: 1.1em;
+  font-size: 1.1003em;
 }
 
 .textfield__input {

@@ -1,0 +1,50 @@
+@import "/src/styles/variables.less";
+
+.dropdown {
+  position: relative;
+
+  &__list {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid @dropdown-accent;
+    list-style: none;
+    bottom: 20px;
+    padding: 0;
+    max-width: 300px;
+
+    &:hover {
+      display: block;
+    }
+  }
+
+  &__label {
+    color: @link-color;
+    text-decoration: none;
+
+    &::after {
+      content: " ▼";
+    }
+  }
+
+  &__label:focus + &__list {
+    display: block;
+  }
+
+  &__item-wrapper {
+    display: flex;
+    cursor: pointer;
+
+    &:hover {
+      background: @dropdown-accent;
+    }
+  }
+
+  &__item {
+    color: @link-color;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px 10px;
+    width: 100%;
+  }
+}

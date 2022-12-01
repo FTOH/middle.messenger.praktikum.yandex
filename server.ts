@@ -2,11 +2,11 @@ import express = require('express')
 
 const app = express()
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT ?? 3000
 
-app.use(express.static(`${__dirname}/dist`))
-app.use((_req, res) => {
-  res.sendFile(`${__dirname}/dist/index.html`)
+app.use(express.static(`${__dirname}/dist/frontend`))
+app.get('*', (_req, res) => {
+  res.sendFile(`${__dirname}/dist/frontend/index.html`)
 })
 
 app.listen(PORT, () => {
