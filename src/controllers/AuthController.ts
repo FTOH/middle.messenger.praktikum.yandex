@@ -1,27 +1,26 @@
 import { AuthApi } from 'api/AuthApi'
 import { LoginData, RegisterData } from 'api/types'
-import { Router } from 'core/Router'
+import { Router, RouterScheme } from 'core/Router'
 import { store } from 'core/Store'
 
-function handleError(error: { reason?: string, message?: string }): void | never {
-  if (error.reason === 'User already in system') {
-    Router().go('/messages')
+function handleError(error: Error): void | never {
+  if (error.message === 'User already in system') {
+    Router().go(RouterScheme.MESSENGER)
     return
   }
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  throw error.reason ?? error.message
+  throw error
 }
 
-export const AuthController = new class AuthController {
+export const AuthController = new class AuthControllerSingleton {
   #api = new AuthApi()
 
   constructor() {
-    this.getUserSilent()
+    this.getUser()
   }
 
   public login(user: Record<string, unknown>) {
     return this.#api.login(user as LoginData).then(() => {
-      Router().go('/messages')
+      Router().go(RouterScheme.MESSENGER)
     }).catch(handleError)
   }
 
@@ -29,24 +28,24 @@ export const AuthController = new class AuthController {
     this.#api.logout()
       .then(() => {
         store.clear()
-        Router().go('/')
+        Router().go(RouterScheme.LOGIN)
       }).catch(console.error)
   }
 
   public register(user: Record<string, unknown>) {
     return this.#api.register(user as RegisterData).then(() => {
-      Router().go('/messages')
+      Router().go(RouterScheme.MESSENGER)
     }).catch(handleError)
   }
 
-  public getUserSilent() {
-    this.getUser()
+  public getUser() {
+    this.getUserPromise()
       .catch(() => {
-        Router().go('/')
+        Router().go(RouterScheme.LOGIN)
       })
   }
 
-  public getUser() {
+  public getUserPromise() {
     return this.#api.getUser()
       .then((user) => store.set('user', user))
   }

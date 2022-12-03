@@ -1,6 +1,7 @@
 import { Button } from 'components/Button'
 import { ChatsController } from 'controllers/ChatsController'
 import { Block } from 'core/Block'
+import { RouterScheme } from 'core/Router'
 import template from './side.hbs'
 import './side.less'
 
@@ -38,6 +39,7 @@ export class ChatSide extends Block<Props> {
     return this.compile(template, {
       createChatButton: this.#button,
       handleChatChoose: this.#handleChatChoose,
+      routerProfile: RouterScheme.PROFILE,
     })
   }
 }

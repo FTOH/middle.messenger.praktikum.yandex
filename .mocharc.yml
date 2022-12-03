@@ -1,2 +1,2 @@
-extension: [js]
-spec: dist/tests/**/*.spec.js
+extension: [ts]
+spec: src/**/*.spec.ts

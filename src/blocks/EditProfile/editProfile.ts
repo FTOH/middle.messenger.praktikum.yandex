@@ -4,6 +4,7 @@ import { Form } from 'components/Form/form'
 import { TextField } from 'components/Textfield'
 import { ProfileController } from 'controllers/ProfileController'
 import { Block } from 'core/Block'
+import { RouterScheme } from 'core/Router'
 import { MainLayout } from 'layouts/MainLayout'
 
 type Props = Pick<UserData, 'email' | 'login' | 'first_name' | 'second_name' | 'phone' | 'display_name'>
@@ -106,7 +107,7 @@ export class EditProfile extends Block<Props> {
 
     this.#layout = new MainLayout({
       content: form as Block,
-      backLink: '/profile',
+      backLink: RouterScheme.PROFILE,
     })
   }
 

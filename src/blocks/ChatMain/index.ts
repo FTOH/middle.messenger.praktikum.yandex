@@ -3,12 +3,11 @@ import { connect } from 'utils/connect'
 import { ChatMain } from './main'
 
 function getReadableName(user: UserData) {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { display_name, first_name, second_name } = user
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  const name = display_name || `${first_name.trim()} ${second_name.trim()}`
+  const { display_name: dnOrNull, first_name: fn, second_name: sn } = user
+  const dn = dnOrNull?.trim() ?? ''
+  const name = dn || `${fn.trim()} ${sn.trim()}`.trim()
 
-  return `${name.trim()} (@${user.login})`
+  return `${name} (@${user.login})`.trim()
 }
 
 export const ChatMainWithState = connect(ChatMain, (state) => {

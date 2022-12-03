@@ -5,6 +5,7 @@ import { MainLayout } from 'layouts/MainLayout'
 import { Block } from 'core/Block'
 import { once } from 'utils/once'
 import { ProfileController } from 'controllers/ProfileController'
+import { RouterScheme } from 'core/Router'
 
 export const EditPasswordPage = once(() => {
   const oldPasswordField = new TextField({
@@ -53,6 +54,6 @@ export const EditPasswordPage = once(() => {
 
   return new MainLayout({
     content: form as Block,
-    backLink: '/profile',
+    backLink: RouterScheme.PROFILE,
   })
 })

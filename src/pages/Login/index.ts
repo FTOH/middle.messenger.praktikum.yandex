@@ -6,12 +6,12 @@ import { Block } from 'core/Block'
 import { once } from 'utils/once'
 import { Link } from 'components/Link'
 import { AuthController } from 'controllers/AuthController'
-import { Router } from 'core/Router'
+import { Router, RouterScheme } from 'core/Router'
 
 export const LoginPage = once(() => {
-  AuthController.getUser()
+  AuthController.getUserPromise()
     .then(() => {
-      Router().go('/messages')
+      Router().go(RouterScheme.MESSENGER)
     }, () => {})
 
   const loginField = new TextField({
@@ -33,7 +33,7 @@ export const LoginPage = once(() => {
 
   const link = new Link({
     text: 'Нет аккаунта? Зарегистрироваться',
-    href: '/sign-up',
+    href: RouterScheme.REGISTER,
   })
 
   const form = new Form({

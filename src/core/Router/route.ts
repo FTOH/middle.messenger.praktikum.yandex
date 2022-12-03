@@ -23,10 +23,6 @@ export class Route {
     return !pathname || pathname === this.pathname
   }
 
-  public getBlock() {
-    return this.#block
-  }
-
   public render(rootQuery: string) {
     if (!this.#block) {
       this.#block = this.#BlockClass()

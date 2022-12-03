@@ -11,20 +11,35 @@
     import { is3rdPartyCookieAllowed } from 'utils/is3rdPartyCookieAllowed'
 
     (async function loop() {
-      await is3rdPartyCookieAllowed().then((result) => {
-        if (result) { window.location.href = '/' }
+
+      await is3rdPartyCookieAllowed().then((isAllowed) => {
+        if (isAllowed) {
+          window.location.href = '/'
+        }
       }).catch(console.error)
+
       setTimeout(loop, 1_000)
     })()
   </script>
+  <style>
+    .container {
+      font-size: 24px;
+      font-family: monospace;
+      padding: 30px;
+      max-width: 1024px;
+      margin: auto;
+    }
+  </style>
 </head>
 
 <body>
-  <div style="font-size: 24px; font-family: monospace;">
+  <div class="container">
     Вы видите эту страницу, потому что в вашем браузере заблокирванны сторонние куки-файлы.<br>
     Проверьте настройки браузера и расширений, которые могут блокировать доступ к куки.<br>
     <br>
-    <a target="_blank" href="https://ru.wikihow.com/включить-куки-в-интернет-браузере">Смотрите инструкцию на сайте WikiHow</a><br>
+    <a target="_blank" href="https://ru.wikihow.com/включить-куки-в-интернет-браузере">
+      Смотрите инструкцию на сайте WikiHow
+    </a><br>
     <br>
     После изменения настроек обновите страницу, если этого не произошло автоматически.<br>
   </div>

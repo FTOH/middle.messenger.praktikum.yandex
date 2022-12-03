@@ -28,6 +28,13 @@ rules:
   '@typescript-eslint/semi': [error, never]
   '@typescript-eslint/consistent-type-definitions': off
   '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_" }]
+  '@typescript-eslint/unbound-method': ["error", { "ignoreStatic": true }]
+
+overrides:
+  - files: '*.spec.ts'
+    rules:
+      prefer-arrow-callback: off
+      func-names: off
 
 ignorePatterns:
   - dist

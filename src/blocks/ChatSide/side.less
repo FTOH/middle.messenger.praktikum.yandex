@@ -1,93 +1,104 @@
 @import "/src/styles/variables.less";
 
-.chat-side__outer {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-side__header {
-  padding: 15px;
-  text-align: right;
-}
-
-.chat-side__rooms {
-  padding: 20px;
-  overflow: auto;
-  flex-grow: 1;
-}
-
-.chat-side__room-wrapper {
-  border-top: 1px solid @chat-side-delimiter;
-  cursor: pointer;
-  user-select: none;
-
-  &:hover {
-    background-color: @chat-side-chats-bg;
+.chat-side {
+  &__outer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
-  &--selected {
-    background-color: @chat-side-hover-bg;
+  &__header {
+    padding: 15px;
+    text-align: right;
   }
-}
 
-.chat-side__room {
-  padding: 15px;
-  display: flex;
-  gap: 10px;
-}
+  &__profile {
+    font-weight: 400;
+    text-decoration: none;
 
-.chat-side__avatar {
-  aspect-ratio: 1/1;
-  width: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
-.chat-side__context {
-  flex-grow: 1;
-}
+  &__rooms {
+    padding: 20px;
+    overflow: auto;
+    flex-grow: 1;
+  }
 
-.chat-side__name {
-  font-weight: bold;
-}
+  &__room-wrapper {
+    border-top: 1px solid @chat-side-delimiter;
+    cursor: pointer;
+    user-select: none;
 
-.chat-side__sent-by-me {
-  font-weight: 900;
-}
+    &:hover {
+      background-color: @chat-side-chats-bg;
+    }
 
-.chat-side__last-message {
-  font-weight: 400;
-}
+    &--selected {
+      background-color: @chat-side-hover-bg;
+    }
+  }
 
-.chat-side__no-last-message {
-  font-weight: 400;
-  font-style: italic;
-}
+  &__room {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+  }
 
-.chat-side__info {
-  text-align: center;
-}
+  &__avatar {
+    aspect-ratio: 1/1;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-.chat-side__date {
-  font-weight: 300;
-}
+  &__context {
+    flex-grow: 1;
+  }
 
-.chat-side__unread-count {
-  margin-top: 5px;
-  background: @chat-side-unread-bg;
-  aspect-ratio: 1/1;
-  padding: 7px;
-  border-radius: 50%;
-  color: @chat-side-unread;
-}
+  &__name {
+    font-weight: bold;
+  }
 
-.chat-side__no-rooms {
-  text-align: center;
-  font-style: italic;
-  font-weight: 400;
-}
+  &__sent-by-me {
+    font-weight: 900;
+  }
 
-.chat-side__footer {
-  margin: 15px;
+  &__last-message {
+    font-weight: 400;
+  }
+
+  &__no-last-message {
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  &__info {
+    text-align: center;
+  }
+
+  &__date {
+    font-weight: 300;
+  }
+
+  &__unread-count {
+    margin-top: 5px;
+    background: @chat-side-unread-bg;
+    aspect-ratio: 1/1;
+    padding: 7px;
+    border-radius: 50%;
+    color: @chat-side-unread;
+  }
+
+  &__no-rooms {
+    text-align: center;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  &__footer {
+    margin: 15px;
+  }
 }

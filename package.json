@@ -6,15 +6,14 @@
   "scripts": {
     "dev": "parcel --target frontend --no-cache",
     "build": "parcel build --target frontend --no-cache",
-    "build:back": "parcel build --target backend --no-cache",
-    "build:test": "parcel build --target test --no-cache \"src/**/*.spec.ts\"",
+    "build:all": "parcel build --no-cache",
     "lint": "run-s lint:*",
     "lint:ts": "tsc --noEmit",
     "lint:js": "eslint .",
     "lint:css": "stylelint .",
-    "test": "npm run build:test && mocha",
+    "test": "ts-mocha --paths -p tsconfig.json",
     "server": "node dist/backend/server.js",
-    "start": "run-s build build:back server"
+    "start": "run-s build:all server"
   },
   "alias": {
     "api": "./src/api",
@@ -39,11 +38,6 @@
       "sourceMap": false,
       "context": "node",
       "source": "server.ts"
-    },
-    "test": {
-      "sourceMap": false,
-      "context": "node",
-      "distDir": "dist/tests"
     }
   },
   "engines": {
@@ -55,7 +49,7 @@
     "@parcel/transformer-less": "^2.7.0",
     "@types/chai": "^4.3.4",
     "@types/express": "^4.17.14",
-    "@types/mocha": "^10.0.0",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.8.2",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
@@ -65,13 +59,14 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.25.2",
-    "mocha": "^10.1.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.7.0",
     "postcss-less": "^6.0.0",
     "rimraf": "^3.0.2",
     "stylelint": "^14.13.0",
     "stylelint-config-standard": "^28.0.0",
+    "ts-mocha": "^10.0.0",
+    "tsconfig-paths": "^4.1.1",
     "typescript": "^4.8.4"
   },
   "dependencies": {

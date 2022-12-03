@@ -6,34 +6,38 @@
   align-items: center;
   color: @profile-color;
   row-gap: 8px;
-}
 
-.profile__header {
-  color: @profile-header;
-}
+  &__header {
+    color: @profile-header;
+  }
 
-.profile__avatar {
-  overflow: hidden;
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-}
+  &__name {
+    min-height: 72px;
+  }
 
-.profile__row {
-  display: flex;
-  align-items: baseline;
-  column-gap: 8px;
-}
+  &__avatar {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+  }
 
-.profile__row--gap {
-  margin-top: 18px;
-}
+  &__row {
+    display: flex;
+    align-items: baseline;
+    column-gap: 8px;
+  }
 
-.profile__row--wide {
-  width: 100%;
-  justify-content: space-between;
-}
+  &__row--gap {
+    margin-top: 18px;
+  }
 
-.profile__empty-value {
-  font-style: italic;
+  &__row--wide {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__empty-value {
+    font-style: italic;
+  }
 }
