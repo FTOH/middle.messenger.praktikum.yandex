@@ -1,4 +1,5 @@
 import { queryStringify } from 'utils/queryStringify'
+import { ServerError } from './server-error'
 
 const enum Method {
   GET = 'GET',
@@ -30,6 +31,14 @@ function isSerializable(data: unknown): data is SerializableData {
   return [FormData, Blob, ArrayBuffer, DataView].some((Type) => data instanceof Type)
 }
 
+function tryDecodeJson(text: string, fallback: unknown): unknown {
+  try {
+    return JSON.parse(text)
+  } catch (_) {
+    return fallback
+  }
+}
+
 function handleResponse<T>(
   xhr: XMLHttpRequest,
   resolve: (value: T | PromiseLike<T>) => void,
@@ -37,12 +46,13 @@ function handleResponse<T>(
 ) {
   const isJson = xhr.getResponseHeader('content-type')
     ?.startsWith('application/json')
+  const res: unknown = isJson ? tryDecodeJson(xhr.responseText, xhr.response) : xhr.response
+
   const isOk = Math.floor(xhr.status / 100) === 2
-  const finish = isOk ? resolve : reject
-  if (isJson) {
-    finish(JSON.parse(xhr.responseText) as T)
+  if (isOk) {
+    resolve(res as T)
   } else {
-    finish(xhr.response as T)
+    reject(new ServerError(xhr.status, res))
   }
 }
 

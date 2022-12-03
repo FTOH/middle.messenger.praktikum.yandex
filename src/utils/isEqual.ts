@@ -4,7 +4,6 @@ export function isEqual(a: Record<string, unknown>, b: Record<string, unknown>):
     return false
   }
 
-  // eslint-disable-next-line no-restricted-syntax, guard-for-in
   const isSame = keys.every((prop) => {
     if (!(prop in b)) {
       return false

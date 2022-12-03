@@ -3,7 +3,7 @@ import { AuthController } from 'controllers/AuthController'
 import { once } from 'utils/once'
 
 export const EditProfilePage = once(() => {
-  AuthController.getUserSilent()
+  AuthController.getUser()
 
   return new EditProfileWithState()
 })

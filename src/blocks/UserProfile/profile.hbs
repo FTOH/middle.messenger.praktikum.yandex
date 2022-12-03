@@ -1,22 +1,12 @@
 <section class="profile">
   <div class="profile__avatar">
-    {{#if image}}
     <img src="{{image}}" alt="Аватар профиля" on:error="failedDownloadAvatar">
-    {{else}}
-    <img src="{{defaultImage}}" alt="Аватар профиля">
-    {{/if}}
   </div>
 
-  <div class="profile__row">
-    {{#if fullname}}
+  <div class="profile__row profile__name">
     <h2>{{fullname}}</h2>
-    {{else}}
-    <h2>&nbsp;</h2>
-    {{/if}}
     {{#if username}}
     <div>@{{username}}</div>
-    {{else}}
-    <div></div>
     {{/if}}
   </div>
 

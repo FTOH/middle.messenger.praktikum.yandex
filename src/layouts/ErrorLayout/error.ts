@@ -1,4 +1,5 @@
 import { Block } from 'core/Block'
+import { RouterScheme } from 'core/Router'
 import template from './error.hbs'
 import './error.less'
 
@@ -21,6 +22,8 @@ export class ErrorLayout extends Block<Props> {
   }
 
   protected override render() {
-    return this.compile(template)
+    return this.compile(template, {
+      routerLogin: RouterScheme.LOGIN,
+    })
   }
 }

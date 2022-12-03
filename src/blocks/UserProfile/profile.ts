@@ -2,13 +2,13 @@ import { Dropdown } from 'components/Dropdown'
 import { Link } from 'components/Link'
 import { AuthController } from 'controllers/AuthController'
 import { Block } from 'core/Block'
-import { Router } from 'core/Router'
+import { Router, RouterScheme } from 'core/Router'
 import defaultImage from '../../assets/defaultprofile.svg'
 import template from './profile.hbs'
 import './profile.less'
 
 type Props = {
-  image: string,
+  image?: string,
   fullname: string,
   username: string,
   displayname: string,
@@ -32,7 +32,7 @@ export class UserProfile extends Block<Props> {
     super({
       tag: 'section',
     }, {
-      image,
+      image: image.trim() || defaultImage,
       fullname,
       username,
       displayname,
@@ -51,12 +51,12 @@ export class UserProfile extends Block<Props> {
       }, {
         text: 'Информацию',
         onClick() {
-          Router().go('/profile/edit')
+          Router().go(RouterScheme.SETTINGS)
         },
       }, {
         text: 'Пароль',
         onClick() {
-          Router().go('/profile/password')
+          Router().go(RouterScheme.CHANGE_PASSWORD)
         },
       }],
     })
@@ -71,8 +71,8 @@ export class UserProfile extends Block<Props> {
   })
 
   #failedDownloadAvatar = () => {
-    if (this.props.image) {
-      this.setProps({ image: '' })
+    if (!this.props.image?.includes(defaultImage)) {
+      this.setProps({ image: defaultImage })
     }
   }
 
@@ -80,7 +80,6 @@ export class UserProfile extends Block<Props> {
     return this.compile(template, {
       dropdown: this.#dropdown,
       exitLink: this.#exitLink,
-      defaultImage,
       failedDownloadAvatar: this.#failedDownloadAvatar,
     })
   }

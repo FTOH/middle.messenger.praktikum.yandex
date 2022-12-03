@@ -3,12 +3,11 @@ import { SocketApi } from 'api/SocketApi'
 import { ChatRoom, SocketMessage, UserMessage } from 'api/types'
 import { store } from 'core/Store'
 
-function handleError(error: { reason?: string, message?: string }): void | never {
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  throw error.reason ?? error.message
+function handleError(error: Error): void | never {
+  throw error
 }
 
-export const ChatsController = new class ChatsController {
+export const ChatsController = new class ChatsControllerSingleton {
   #api = new ChatsApi()
 
   #socket = new SocketApi()
@@ -108,16 +107,17 @@ export const ChatsController = new class ChatsController {
     if (chat) {
       const user = store.getState().selectedChatUsers?.find((e) => e.id === msg.user_id)
       if (!user) return
-      const {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        first_name, second_name, avatar, email, login, phone,
-      } = user
 
       chat.last_message = {
         content: msg.content,
         time: new Date(msg.time),
         user: {
-          first_name, second_name, avatar: avatar ?? '', email, login, phone,
+          first_name: user.first_name,
+          second_name: user.second_name,
+          avatar: user.avatar ?? '',
+          email: user.email,
+          login: user.login,
+          phone: user.phone,
         },
       }
       store.set(`chatsById.${chatId}`, chat)

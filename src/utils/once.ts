@@ -1,8 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const once = <T extends Function>(func: T): T => {
+interface OnceInner extends Function {
+  originalName?: string
+}
+
+export const once = <T extends OnceInner>(func: T): T => {
   let called = false
   let result: unknown
-  const wrapper = function onceWrapper(...args: unknown[]): unknown {
+  const wrapper: OnceInner = function onceWrapper(...args: unknown[]) {
     if (!called) {
       result = func(...args)
       called = true
@@ -10,5 +13,5 @@ export const once = <T extends Function>(func: T): T => {
     return result
   }
   wrapper.originalName = func.name
-  return wrapper as unknown as T
+  return wrapper as T
 }

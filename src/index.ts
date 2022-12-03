@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Router } from 'core/Router'
+import { Router, RouterScheme } from 'core/Router'
 import { ChatPage } from 'pages/Chat'
 import { EditPasswordPage } from 'pages/EditPassword'
 import { EditProfilePage } from 'pages/EditProfile'
@@ -17,32 +16,21 @@ is3rdPartyCookieAllowed().then((result) => {
   }
 }).catch(console.error)
 
-function handleLinkClicks(event: MouseEvent) {
-  if (!event.target) return
-  const link = (event.target as HTMLElement).closest('a')
-  if (!link?.href) return
-  const { host, pathname } = new URL(link.href)
-  if (host !== window.location.host) return
-
-  event.preventDefault()
-  Router().go(pathname)
-}
-document.addEventListener('click', handleLinkClicks)
-
 if (process.env.NODE_ENV === 'development') {
   console.debug('Opened page', window.location.pathname)
 }
 
 Router('.app')
-  .use('/', LoginPage)
-  .use('/sign-up', RegisterPage)
-  .use('/messages', ChatPage)
-  .use('/profile', ProfilePage)
-  .use('/profile/edit', EditProfilePage)
-  .use('/profile/password', EditPasswordPage)
+  .use(RouterScheme.LOGIN, LoginPage)
+  .use(RouterScheme.REGISTER, RegisterPage)
+  .use(RouterScheme.MESSENGER, ChatPage)
+  .use(RouterScheme.PROFILE, ProfilePage)
+  .use(RouterScheme.SETTINGS, EditProfilePage)
+  .use(RouterScheme.CHANGE_PASSWORD, EditPasswordPage)
   .use('/sitemap', SitemapPage)
   .use('/404', Error404Page)
   .use('/500', Error500Page)
+  .interceptUserClicks('a')
   .useFallback(Error404Page)
 
 Router().start()

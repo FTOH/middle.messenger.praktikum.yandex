@@ -1,24 +1,23 @@
-import { Router } from 'core/Router'
+import { Router, RouterScheme } from 'core/Router'
 import { ProfileApi } from 'api/ProfileApi'
 import { store } from 'core/Store'
 import { ChangePasswordData, ProfileData } from 'api/types'
 
-function handleError(error: { reason?: string, message?: string }): void | never {
-  if (error.reason === 'User already in system') {
-    Router().go('/messages')
+function handleError(error: Error): void | never {
+  if (error.message === 'User already in system') {
+    Router().go(RouterScheme.MESSENGER)
     return
   }
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  throw error.reason ?? error.message
+  throw error
 }
 
-export const ProfileController = new class ProfileController {
+export const ProfileController = new class ProfileControllerSingleton {
   #api = new ProfileApi()
 
   public editProfile(user: Record<string, unknown>) {
     return this.#api.changeProfile(user as ProfileData).then((newUser) => {
       store.set('user', newUser)
-      Router().go('/profile')
+      Router().go(RouterScheme.PROFILE)
     }).catch(handleError)
   }
 
@@ -30,7 +29,7 @@ export const ProfileController = new class ProfileController {
 
   public editPassword(password: Record<string, unknown>) {
     return this.#api.changePassword(password as ChangePasswordData).then(() => {
-      Router().go('/profile')
+      Router().go(RouterScheme.PROFILE)
     }).catch(handleError)
   }
 }()
