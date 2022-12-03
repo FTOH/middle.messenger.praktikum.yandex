@@ -1,4 +1,3 @@
-// import { Button } from 'components/Button'
 import { Form } from 'components/Form/form'
 import { UserProfileWithState } from 'blocks/UserProfile'
 import { Block } from 'core/Block'
@@ -7,9 +6,10 @@ import { once } from 'utils/once'
 import { createElement } from 'utils/createElement'
 import { ProfileController } from 'controllers/ProfileController'
 import { AuthController } from 'controllers/AuthController'
+import { RouterScheme } from 'core/Router'
 
 export const ProfilePage = once(() => {
-  AuthController.getUserSilent()
+  AuthController.getUser()
 
   const avatarUploader = createElement('input', {
     type: 'file',
@@ -35,5 +35,5 @@ export const ProfilePage = once(() => {
     }
   }
 
-  return new MainLayout({ content: form as Block, backLink: '/messages' })
+  return new MainLayout({ content: form as Block, backLink: RouterScheme.MESSENGER })
 })

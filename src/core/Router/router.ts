@@ -1,6 +1,7 @@
 import { BlockBuilder } from 'core/Block'
 import { once } from 'utils/once'
 import { Route } from './route'
+import { RouterScheme } from './scheme'
 
 export const Router = once((rootQuery = '') => new class RouterSingleton {
   #rootQuery = rootQuery
@@ -53,7 +54,7 @@ export const Router = once((rootQuery = '') => new class RouterSingleton {
     route.render(this.#rootQuery)
   }
 
-  public go(url: string) {
+  public go(url: RouterScheme) {
     if (this.#currentRoute?.match(url)) {
       return
     }
@@ -73,8 +74,21 @@ export const Router = once((rootQuery = '') => new class RouterSingleton {
     return this.#routes
   }
 
-  public getCurrentBlock() {
-    return this.#currentRoute?.getBlock()
+  public interceptUserClicks(selector: string) {
+    type ClickEvent = MouseEvent & {
+      target: HTMLElement | null
+    }
+    function handler(event: ClickEvent) {
+      const link = event.target?.closest<HTMLAnchorElement>(selector)
+      if (!link?.href) return
+      const { host, pathname } = new URL(link.href)
+      if (host !== window.location.host) return
+
+      event.preventDefault()
+      Router().go(pathname as RouterScheme)
+    }
+    document.addEventListener('click', handler as EventListener)
+    return this
   }
 
   #getRoute(pathname: string) {

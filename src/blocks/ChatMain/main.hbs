@@ -33,9 +33,11 @@
   </main>
 </section>
 <footer class="chat-main__footer">
-  <input class="chat-main__message-input" type="text" name="message" on:focus="handleInput" on:blur="handleInput"
-    on:input="handleInput">
-  {{{button}}}
+  <form class="chat-main__send-form">
+    <input class="chat-main__message-input" type="text" name="message" on:focus="handleInput" on:blur="handleInput"
+      on:input="handleInput">
+    {{{button}}}
+  </form>
 </footer>
 {{else}}
 <section class="chat-main__content-wrapper">

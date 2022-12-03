@@ -1,5 +1,6 @@
 import { Block } from 'core/Block'
 import template from './sitemap.hbs'
+import './sitemap.less'
 
 type Props = {
   routes: { pathname: string }[]

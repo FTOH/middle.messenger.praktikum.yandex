@@ -6,6 +6,7 @@ import { Block } from 'core/Block'
 import { once } from 'utils/once'
 import { Link } from 'components/Link'
 import { AuthController } from 'controllers/AuthController'
+import { RouterScheme } from 'core/Router'
 
 export const RegisterPage = once(() => {
   const emailField = new TextField({
@@ -59,7 +60,7 @@ export const RegisterPage = once(() => {
 
   const link = new Link({
     text: 'Есть аккаунт? Войти',
-    href: '/',
+    href: RouterScheme.LOGIN,
   })
 
   const form = new Form({

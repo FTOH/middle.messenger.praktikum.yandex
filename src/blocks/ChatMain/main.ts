@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { Button } from 'components/Button'
 import { ChatsController } from 'controllers/ChatsController'
 import { Block } from 'core/Block'
@@ -20,7 +19,8 @@ export class ChatMain extends Block<Props> {
 
   #value = ''
 
-  #handleSend = () => {
+  #handleSend = (event: Event) => {
+    event.preventDefault()
     if (this.#value) {
       ChatsController.sendMessage(this.#value)
     } else if (process.env.NODE_ENV === 'development') {
@@ -28,16 +28,16 @@ export class ChatMain extends Block<Props> {
     }
   }
 
-  #handleInput = (event: Event) => {
+  #handleInput(event: Event) {
     const input = event.target as HTMLInputElement
     this.#value = input.value
   }
 
-  #showUsers(this: HTMLElement) {
+  static #showUsers(this: HTMLElement) {
     this.nextElementSibling?.classList.toggle('chat-main__users-list--show')
   }
 
-  #removeUser(this: HTMLElement, event: MouseEvent) {
+  static #removeUser(this: HTMLElement, event: MouseEvent) {
     const target = (event.target as HTMLElement | null)
     const el = target?.closest('button')
     if (el && this.contains(el) && el.dataset.user) {
@@ -46,7 +46,7 @@ export class ChatMain extends Block<Props> {
     }
   }
 
-  #addUser() {
+  static #addUser() {
     ChatsController.addUser()
   }
 
@@ -59,10 +59,10 @@ export class ChatMain extends Block<Props> {
   protected render() {
     return this.compile(template, {
       button: this.#button,
-      handleInput: this.#handleInput,
-      showUsers: this.#showUsers,
-      removeUser: this.#removeUser,
-      addUser: this.#addUser,
+      handleInput: this.#handleInput.bind(this),
+      showUsers: ChatMain.#showUsers,
+      removeUser: ChatMain.#removeUser,
+      addUser: ChatMain.#addUser,
     })
   }
 }
