@@ -17,19 +17,26 @@ describe('queryStringify', function () {
     )
   })
 
-  it('objects and arrays', function () {
+  it('object with primitves', function () {
     const testObj = {
       key: 1,
       key2: 'test',
       key3: false,
       key4: true,
-      key5: [1, 2, 3],
-      key6: { a: 1 },
-      key7: { b: { d: 2 } },
     }
     assert.equal(
       queryStringify(testObj),
-      'key=1&key2=test&key3=false&key4=true&key5[0]=1&key5[1]=2&key5[2]=3&key6[a]=1&key7[b][d]=2',
+      'key=1&key2=test&key3=false&key4=true',
     )
+  })
+
+  it('objects and arrays', function () {
+    const testObj = {
+      key1: [1, 2, 3],
+      key2: { a: 1 },
+      key3: { b: { d: 2 } },
+      key4: { b: null },
+    }
+    assert.equal(queryStringify(testObj), 'key1[0]=1&key1[1]=2&key1[2]=3&key2[a]=1&key3[b][d]=2&key4[b]=null')
   })
 })

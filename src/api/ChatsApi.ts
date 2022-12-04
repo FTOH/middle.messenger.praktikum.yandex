@@ -27,7 +27,11 @@ export class ChatsApi {
   }
 
   public getChatUsers(chatId: number) {
-    return http.get<UserData[]>(`${chatId}/users`)
+    return http.get<UserData[]>(`${chatId}/users`, {
+      data: {
+        limit: 1000,
+      },
+    })
   }
 
   public addUsers(chatId: number, users: number[]) {
