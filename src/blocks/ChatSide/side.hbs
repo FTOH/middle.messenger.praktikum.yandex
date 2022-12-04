@@ -1,0 +1,47 @@
+<header class="chat-side__header">
+  <a class="chat-side__profile" href="{{routerProfile}}">Профиль ›</a>
+</header>
+<ul class="chat-side__rooms">
+  {{#each rooms}}
+  <li class="chat-side__room-wrapper{{#if selected}} chat-side__room-wrapper--selected{{/if}}" data-id="{{id}}"
+    on:click="handleChatChoose">
+    <section class="chat-side__room">
+
+      <img class="chat-side__avatar" src="{{photo}}" alt="avatar">
+
+      <div class="chat-side__context">
+        <div class="chat-side__name">{{name}}</div>
+        {{#if lastMessage}}
+        {{#if lastMessage.sentByMe}}
+        <span class="chat-side__sent-by-me">
+          Я:
+        </span>
+        {{/if}}
+        <span class="chat-side__last-message">
+          {{lastMessage.text}}
+        </span>
+        {{else}}
+        <span class="chat-side__no-last-message">
+          Здесь пока пусто
+        </span>
+        {{/if}}
+      </div>
+
+      <div class="chat-side__info">
+        <div class="chat-side__date">{{lastMessage.time}}</div>
+        {{#if unreadCount}}
+        <div class="chat-side__unread-count">{{unreadCount}}</div>
+        {{/if}}
+      </div>
+
+    </section>
+  </li>
+  {{else}}
+  <li class="chat-side__no-rooms">
+    Тут пока пусто
+  </li>
+  {{/each}}
+</ul>
+<footer class="chat-side__footer">
+  {{{createChatButton}}}
+</footer>

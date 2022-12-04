@@ -1,8 +1,8 @@
-<nav>
+<nav class="sitemap">
   <ul>
-    {{#each links}}
+    {{#each routes}}
       <li>
-        <a href="{{url}}">{{name}}</a>
+        <a href="{{pathname}}">{{pathname}}</a>
       </li>
     {{/each}}
   </ul>

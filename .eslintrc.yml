@@ -1,33 +1,40 @@
----
 root: true
 
 extends:
   - airbnb-base
+  - airbnb-typescript/base
   - plugin:import/typescript
   - plugin:import/recommended
   - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:@typescript-eslint/strict
 
 settings:
   import/resolver: typescript
 
+parserOptions:
+  project: tsconfig.json
 
 rules:
-  semi: off
   semi-style: [error, first]
-  max-len: [warn, 100]
-  max-params: [error, 3]
   no-param-reassign: off
   class-methods-use-this: off
   consistent-return: off
-  no-restricted-syntax: off
-  no-shadow: off
   no-console: [warn, { allow: [debug, error] }]
 
   import/extensions: [error, never]
   import/prefer-default-export: off
 
   '@typescript-eslint/semi': [error, never]
+  '@typescript-eslint/consistent-type-definitions': off
   '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_" }]
+  '@typescript-eslint/unbound-method': ["error", { "ignoreStatic": true }]
+
+overrides:
+  - files: '*.spec.ts'
+    rules:
+      prefer-arrow-callback: off
+      func-names: off
 
 ignorePatterns:
   - dist

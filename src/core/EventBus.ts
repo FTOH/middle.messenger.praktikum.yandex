@@ -4,7 +4,7 @@ export class EventBus<T extends string = string> {
   private listeners: Partial<EventStore> = {}
 
   on(event: T, callback: CallableFunction) {
-    const listeners = this.listeners[event] || (this.listeners[event] = [])
+    const listeners = this.listeners[event] ?? (this.listeners[event] = [])
     listeners.push(callback)
   }
 
@@ -25,6 +25,8 @@ export class EventBus<T extends string = string> {
 
   emit(event: T, ...args: unknown[]) {
     this.listeners[event]
-      ?.forEach((listener) => listener(...args))
+      ?.forEach((listener) => {
+        listener(...args)
+      })
   }
 }

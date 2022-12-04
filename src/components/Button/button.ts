@@ -10,13 +10,15 @@ type Props = {
 export class Button extends Block<Props> {
   constructor({
     content = '' as Content,
-    events = {},
     className = '',
+    onClick = (() => {}) as EventListener,
   }) {
     super({
       tag: 'button',
       className: `button ${className}`,
-      parentEvents: events,
+      parentEvents: {
+        click: onClick,
+      },
     }, { content })
   }
 

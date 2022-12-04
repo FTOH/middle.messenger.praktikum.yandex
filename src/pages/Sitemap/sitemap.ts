@@ -1,17 +1,18 @@
 import { Block } from 'core/Block'
 import template from './sitemap.hbs'
+import './sitemap.less'
 
 type Props = {
-  links: { url: string, name: string }[]
+  routes: { pathname: string }[]
 }
 
-export class SitemapPage extends Block<Props> {
+export class SitemapPageView extends Block<Props> {
   constructor({
-    links = [],
+    routes = [],
   }: Props) {
     super({
       tag: 'main',
-    }, { links })
+    }, { routes })
   }
 
   protected render() {

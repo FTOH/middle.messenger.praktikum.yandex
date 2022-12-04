@@ -1,5 +1,6 @@
 <label class="textfield__content">
-  <input class="textfield__input" on:blur="blur" on:focus="focus" type="{{type}}" name="{{name}}" value="{{value}}" placeholder="{{label}}" >
+  <input class="textfield__input" on:blur="blur" on:focus="focus" on:input="input"
+   type="{{type}}" name="{{name}}" value="{{value}}" placeholder="{{label}} {{#if required}}*{{/if}}" autocomplete="{{autocomplete}}" >
   <div class="textfield__label">
     <span>{{label}}</span>
     {{{error}}}

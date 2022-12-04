@@ -1,45 +1,67 @@
+import { InlineError } from 'components/InlineError'
 import { TextField } from 'components/Textfield'
 import { Block } from 'core/Block'
-import { validateInput } from 'core/validation'
 import template from './form.hbs'
+import './form.less'
+
+const NoOp = () => {}
 
 type Props = {
   rows: unknown[],
   header: string,
+  error: InlineError
 }
 
 export class Form extends Block<Props> {
   constructor({
     header = 'Загаловок',
-    action = '',
     rows = [] as Props['rows'],
+    error = new InlineError({ className: 'form__error' }),
+    onSubmit = NoOp as ((event: SubmitEvent) => unknown),
   }) {
     super({
       tag: 'form',
-      attr: {
-        action,
-      },
       parentEvents: {
+        input: () => {
+          this.hideError()
+        },
         submit: (event: Event) => {
           event.preventDefault()
+          this.hideError()
 
-          const fields = this.props.rows.filter((row) => row instanceof TextField) as TextField[]
-          const data = fields.map((field) => ({
-            type: field.props.name,
-            value: field.props.value,
-          }))
-          const error = validateInput(data)
-
-          if (error) {
-            console.error('Форма не отправлена из-за ошибки валидации')
+          if (this.isValid()) {
+            onSubmit(event as SubmitEvent)
           } else {
-            const formData = new FormData(event.target as HTMLFormElement)
-            // eslint-disable-next-line no-console
-            console.log('Форма отправлена', Object.fromEntries([...formData.entries()]))
+            this.showError('Заполните необходимые поля или исправьте ошибки')
           }
         },
       },
-    }, { rows, header })
+    }, { rows, header, error })
+  }
+
+  #getTextFields() {
+    return this.props.rows.filter((row) => row instanceof TextField) as TextField[]
+  }
+
+  public showError(error: string) {
+    this.props.error.setProps({ message: error })
+  }
+
+  public hideError() {
+    this.props.error.setProps({ message: '' })
+  }
+
+  public getFormData() {
+    return new FormData(this.getContent() as HTMLFormElement)
+  }
+
+  public getElements() {
+    return Object.fromEntries(this.getFormData())
+  }
+
+  public isValid() {
+    const inputs = this.#getTextFields()
+    return inputs.every((input) => input.isValid())
   }
 
   protected render() {

@@ -1,0 +1,36 @@
+<section class="profile">
+  <div class="profile__avatar">
+    <img src="{{image}}" alt="Аватар профиля" on:error="failedDownloadAvatar">
+  </div>
+
+  <div class="profile__row profile__name">
+    <h2>{{fullname}}</h2>
+    {{#if username}}
+    <div>@{{username}}</div>
+    {{/if}}
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Имя в чате</div>
+    {{#if displayname}}
+    <div>{{displayname}}</div>
+    {{else}}
+    <div class="profile__empty-value">не указано</div>
+    {{/if}}
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Почта</div>
+    <div>{{mail}}</div>
+  </div>
+
+  <div class="profile__row profile__row--wide">
+    <div>Телефон</div>
+    <div>{{phone}}</div>
+  </div>
+
+  <section class="profile__row profile__row--wide profile__row--gap">
+    {{{dropdown}}}
+    {{{exitLink}}}
+  </section>
+</section>

@@ -1,0 +1,104 @@
+@import "/src/styles/variables.less";
+
+.chat-side {
+  &__outer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    padding: 15px;
+    text-align: right;
+  }
+
+  &__profile {
+    font-weight: 400;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__rooms {
+    padding: 20px;
+    overflow: auto;
+    flex-grow: 1;
+  }
+
+  &__room-wrapper {
+    border-top: 1px solid @chat-side-delimiter;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background-color: @chat-side-chats-bg;
+    }
+
+    &--selected {
+      background-color: @chat-side-hover-bg;
+    }
+  }
+
+  &__room {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+  }
+
+  &__avatar {
+    aspect-ratio: 1/1;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__context {
+    flex-grow: 1;
+  }
+
+  &__name {
+    font-weight: bold;
+  }
+
+  &__sent-by-me {
+    font-weight: 900;
+  }
+
+  &__last-message {
+    font-weight: 400;
+  }
+
+  &__no-last-message {
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  &__info {
+    text-align: center;
+  }
+
+  &__date {
+    font-weight: 300;
+  }
+
+  &__unread-count {
+    margin-top: 5px;
+    background: @chat-side-unread-bg;
+    aspect-ratio: 1/1;
+    padding: 7px;
+    border-radius: 50%;
+    color: @chat-side-unread;
+  }
+
+  &__no-rooms {
+    text-align: center;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  &__footer {
+    margin: 15px;
+  }
+}

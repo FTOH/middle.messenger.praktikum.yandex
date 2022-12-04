@@ -1,51 +1,63 @@
-@import "../../styles/variables.less";
+@import "/src/styles/variables.less";
 
 .textfield {
   line-height: 20px;
 
   --offset: 17px, 20px;
-}
 
-.textfield__error {
-  color: @textfield-error;
-  font-size: 0.8em;
-}
+  &__error {
+    color: @textfield-error;
+    font-size: 0.8em;
+  }
 
-.textfield__content {
-  transition: 100ms ease;
-  color: var(--color, @textfield-color);
-  border-bottom: 3px solid var(--color, @textfield-border);
-  display: flex;
-  flex-direction: column-reverse;
-}
+  &__content {
+    transition: 100ms ease;
+    color: var(--color, @textfield-color);
+    border-bottom: 3px solid var(--color, @textfield-border);
+    display: flex;
+    flex-direction: column-reverse;
+  }
 
-.textfield:focus-within > .textfield__content {
-  --color: @textfield-focus-color;
-}
+  &:focus-within > &__content {
+    --color: @textfield-focus-color;
+  }
 
-.textfield__label {
-  text-align: left;
-  opacity: 0;
-  pointer-events: none;
-  transition: 200ms ease-in-out;
-  transform: translate(var(--offset));
-  display: flex;
-  gap: 5px;
-}
+  &__label {
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transition: 200ms ease-in-out;
+    transform: translate(var(--offset));
+    display: flex;
+    gap: 5px;
+  }
 
-.textfield__input:not(:placeholder-shown) + .textfield__label {
-  transform: translate(0, 0);
-  opacity: 1;
-  font-size: 1.1em;
-}
+  &__input:-webkit-autofill + &__label {
+    transform: translate(0, 0);
+    opacity: 1;
+    font-size: 1.1001em;
+  }
 
-.textfield__input {
-  margin: 5px 15;
-  background-color: transparent;
+  &__input:autofill + &__label {
+    transform: translate(0, 0);
+    opacity: 1;
+    font-size: 1.1002em;
+  }
 
-  &,
-  &:focus {
-    border: none;
-    outline: none;
+  &__input:not(:placeholder-shown) + &__label {
+    transform: translate(0, 0);
+    opacity: 1;
+    font-size: 1.1003em;
+  }
+
+  &__input {
+    margin: 5px 15;
+    background-color: transparent;
+
+    &,
+    &:focus {
+      border: none;
+      outline: none;
+    }
   }
 }

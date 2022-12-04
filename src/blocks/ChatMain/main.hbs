@@ -1,0 +1,50 @@
+{{#if room}}
+<header class="chat-main__header">
+  <h1>{{room.title}}</h1>
+  <div class="chat-main__users">
+    <div class="chat-main__user-count-label" on:click="showUsers">
+      {{room.usersCount}} пользователь(-ей)
+    </div>
+    <ul class="chat-main__users-list" on:click="removeUser">
+      {{#each room.users}}
+      <li class="chat-main__user-wrapper">
+        <div>{{name}}</div>
+        <button class="chat-main__inline-button" data-user="{{id}}">×</button>
+      </li>
+      {{/each}}
+      <li>
+        <button class="chat-main__inline-button chat-main__add-user" on:click="addUser">+</button>
+      </li>
+    </ul>
+  </div>
+  <div></div>
+</header>
+<section class="chat-main__content-wrapper">
+  <main class="chat-main__content">
+    <ul class="chat-main__messages">
+      {{#each room.messages}}
+      <li class="chat-main__message-wrapper">
+        <section class="chat-main__message{{#if sentByMe}} chat-main__message--sent-by-me{{/if}}">
+          {{content}}
+        </section>
+      </li>
+      {{/each}}
+    </ul>
+  </main>
+</section>
+<footer class="chat-main__footer">
+  <form class="chat-main__send-form">
+    <input class="chat-main__message-input" type="text" name="message" on:focus="handleInput" on:blur="handleInput"
+      on:input="handleInput">
+    {{{button}}}
+  </form>
+</footer>
+{{else}}
+<section class="chat-main__content-wrapper">
+  <main class="chat-main__content">
+    <h1 class="chat-main__no-chats">
+      Выберите, кому хотели бы написать
+    </h1>
+  </main>
+</section>
+{{/if}}

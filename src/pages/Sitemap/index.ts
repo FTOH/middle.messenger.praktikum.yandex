@@ -1,29 +1,10 @@
-import * as fs from 'fs'
-import { SitemapPage } from './sitemap'
+import { Router } from 'core/Router'
+import { Route } from 'core/Router/route'
+import { once } from 'utils/once'
+import { SitemapPageView } from './sitemap'
 
-const REGEX_PATTERN = /case '(?<url>[^']+)'[^/]+\/\/\s*(?<name>.*)/g
+const startsWithSlash = (route: Route) => route.pathname.startsWith('/')
 
-type Link = {
-  name: string,
-  url: string,
-}
-
-// parcel заинлайнит это
-const fileContent = fs.readFileSync('src/index.ts', 'utf8')
-
-const links: Link[] = [{
-  name: 'Ошибка 404',
-  url: '/notexist',
-}]
-
-for (const matched of fileContent.matchAll(REGEX_PATTERN)) {
-  links.push(matched.groups as Link)
-}
-
-links.sort((a, b) => {
-  if (a.name < b.name) return -1
-  if (a.name > b.name) return 1
-  return 0
-})
-
-export const sitemapPage = new SitemapPage({ links })
+export const SitemapPage = once(() => new SitemapPageView({
+  routes: Router().getRoutes().filter(startsWithSlash),
+}))
