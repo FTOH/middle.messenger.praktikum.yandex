@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import { queryStringify } from './queryStringify'
 
-describe('queryStringify', function () {
+describe('utils/queryStringify', function () {
   it('primitive values', function () {
     assert.equal(queryStringify({ zero: 0 }), 'zero=0')
     assert.equal(queryStringify({ positive: 12345 }), 'positive=12345')

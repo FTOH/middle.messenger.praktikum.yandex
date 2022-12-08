@@ -3,7 +3,6 @@ import { ChatsController } from 'controllers/ChatsController'
 import { Block } from 'core/Block'
 import template from './main.hbs'
 import './main.less'
-import './simple-image-fix.css'
 
 type Props = {
   room?: ChatRoomHistory
