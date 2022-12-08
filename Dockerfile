@@ -1,6 +1,7 @@
 FROM node
-WORKDIR /usr/src/app
+WORKDIR /var/www
 COPY . .
-RUN npm ci --omit dev
+RUN npm ci --omit dev --ignore-scripts
+RUN npm build:all
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD npm run server
