@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { v4 as uuidv4 } from 'uuid'
 import { createElement } from 'utils/createElement'
 import { EventBus } from './EventBus'
 
@@ -26,11 +26,7 @@ export type BlockBuilder<T = Props> = T extends Props ? (() => Block<T>) : never
 export abstract class Block<T extends Props = any> {
   public blockName: string = this.constructor.name
 
-  #id = nanoid()
-
-  get id() {
-    return this.#id
-  }
+  #id = uuidv4()
 
   #meta: { root: RootTag, props: Props }
 

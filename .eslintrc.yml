@@ -35,8 +35,13 @@ overrides:
     rules:
       prefer-arrow-callback: off
       func-names: off
+      no-restricted-globals: off
+      '@typescript-eslint/no-explicit-any': off
+      '@typescript-eslint/no-unsafe-assignment': off
+      '@typescript-eslint/no-non-null-assertion': off
 
 ignorePatterns:
   - dist
   - .parcel-cache
   - node_modules
+  - '*.js'

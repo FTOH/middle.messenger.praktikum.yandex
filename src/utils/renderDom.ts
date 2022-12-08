@@ -5,7 +5,7 @@ export function renderDom<T extends Block['props']>(
   component: Block<T>,
 ) {
   const root = document.querySelector(rootSelector)
-  if (!root) return
+  if (!root) throw new Error(`Не найден элемент для монтирования ${rootSelector}`)
 
   root.innerHTML = ''
   root.append(component.getContent())

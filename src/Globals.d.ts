@@ -1,6 +1,10 @@
 declare module '*.svg' {
   const path: string
-  export default path
+  export = path
+}
+declare module '*.jpg' {
+  const path: string
+  export = path
 }
 declare module '*.less'
 declare module '*.hbs' {

@@ -7,20 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie is blocked</title>
 
-  <script type="module">
-    import { is3rdPartyCookieAllowed } from 'utils/is3rdPartyCookieAllowed'
-
-    (async function loop() {
-
-      await is3rdPartyCookieAllowed().then((isAllowed) => {
-        if (isAllowed) {
-          window.location.href = '/'
-        }
-      }).catch(console.error)
-
-      setTimeout(loop, 1_000)
-    })()
-  </script>
+  <script src="check-cookie.bundle.js"></script>
   <style>
     .container {
       font-size: 24px;
