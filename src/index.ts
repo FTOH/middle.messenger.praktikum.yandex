@@ -9,6 +9,7 @@ import { ProfilePage } from 'pages/Profile'
 import { RegisterPage } from 'pages/Register'
 import { SitemapPage } from 'pages/Sitemap'
 import { is3rdPartyCookieAllowed } from 'utils/is3rdPartyCookieAllowed'
+import './styles/common.less'
 
 is3rdPartyCookieAllowed().then((result) => {
   if (!result) {

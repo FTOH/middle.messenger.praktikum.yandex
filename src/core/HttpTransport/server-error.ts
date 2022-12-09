@@ -1,16 +1,19 @@
 import { isAnyObject } from 'utils/isAnyObject'
 
-export class ServerError<T> extends Error {
+function getMessageFromResponse<T>(status: number, response: T | { reason?: string }) {
+  if (isAnyObject(response) && response.reason) {
+    return response.reason
+  }
+  return `Server response (${status}): ${JSON.stringify(response)}`
+}
+
+export class ServerError<T = Record<string, unknown>> extends Error {
   public name = 'ServerError'
 
   constructor(
     public readonly status: number,
-    response: T | { reason?: string },
+    public readonly response: T | { reason?: string },
   ) {
-    if (isAnyObject(response) && response.reason) {
-      super(response.reason)
-    } else {
-      super(`Server response (${status}): ${JSON.stringify(response)}`)
-    }
+    super(getMessageFromResponse(status, response))
   }
 }

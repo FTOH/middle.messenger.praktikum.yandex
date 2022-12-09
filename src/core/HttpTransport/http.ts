@@ -79,7 +79,7 @@ export class HTTPTransport {
     })
   }
 
-  public post<T>(url: string, options = {}) {
+  public post<T>(url: string, options: OptionsWithData = {}) {
     return this.request<T>(url, {
       ...options,
       method: Method.POST,

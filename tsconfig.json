@@ -6,6 +6,8 @@
     "experimentalDecorators": true,
     "strict": true,
     "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowJs": true,
 
     "strictNullChecks": true,
     "sourceMap": true,
@@ -27,8 +29,7 @@
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx"
+    "**/*.ts"
   ],
   "exclude": [
     "dist",

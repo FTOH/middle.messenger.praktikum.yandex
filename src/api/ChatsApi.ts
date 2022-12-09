@@ -4,6 +4,7 @@ import {
   ChatRoom, ChatRoomCreate, LastMessageUparsed, UserData,
 } from './types'
 
+const RESOURCES = 'https://ya-praktikum.tech/api/v2/resources/'
 const http = new HTTPTransport('https://ya-praktikum.tech/api/v2/chats/')
 
 export class ChatsApi {
@@ -11,7 +12,8 @@ export class ChatsApi {
     return http.get<ChatRoom<LastMessageUparsed>[]>('')
       .then((chats) => (
         chats.map<ChatRoom>((chat) => {
-          if (!chat.avatar) chat.avatar = defaultProfile
+          if (chat.avatar) chat.avatar = RESOURCES + chat.avatar
+          else chat.avatar = defaultProfile
           if (chat.last_message) {
             chat.last_message.time = new Date(chat.last_message.time)
           }
