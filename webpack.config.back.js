@@ -43,6 +43,7 @@ const serverConfig = {
             options: {
               configFile: resolve('tsconfig.json'),
               onlyCompileBundledFiles: true,
+              transpileOnly: !isDev,
             },
           },
         ],

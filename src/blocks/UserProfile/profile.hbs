@@ -1,7 +1,5 @@
 <section class="profile">
-  <div class="profile__avatar">
-    <img src="{{image}}" alt="Аватар профиля" on:error="failedDownloadAvatar">
-  </div>
+  <img class="profile__avatar" src="{{image}}" alt="Аватар профиля" on:error="failedDownloadAvatar">
 
   <div class="profile__row profile__name">
     <h2>{{fullname}}</h2>
